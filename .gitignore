@@ -1,0 +1,61 @@
+# ---- Secrets / credentials ----
+# Local config holds API keys — never commit it (lives in ~/.figexplain/ anyway,
+# but guard against any stray local copy).
+config.json
+.figma*
+*.env
+.env
+.env.*
+secrets.*
+*_secret*
+
+# ---- Private / generated outputs ----
+# Local note HTML dumps and extracted images are user-specific.
+figexplain_*.html
+*_note.html
+*_smoke*.html
+manifest.json
+fig_extract.json
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ---- Virtual envs ----
+venv/
+.venv/
+env/
+ENV/
+
+# ---- IDE / OS ----
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Test scratch ----
+_*.py
+_*smoke*
+_*.json
+_*.html
