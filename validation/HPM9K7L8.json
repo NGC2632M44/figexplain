@@ -1,0 +1,190 @@
+{
+  "input_key": "HPM9K7L8",
+  "status": "done",
+  "steps": [
+    "文献:Efficacy and safety of GLP-1 agonists in the treatment of T2 | Scientific Reports | 2025-07",
+    "PDF:Ren 等 - 2025 - Efficacy and safety of GLP-1 agonists in the treatment ",
+    "[1/4] 图 6 张 | 摘要 1558 字 | 引言 4000 字 | 正文 60000 字",
+    "[2/4] 逐图解读…",
+    "  Fig 1: OK (1 panels) 53s",
+    "  Fig 2: OK (1 panels) 30s",
+    "  Fig 3: OK (0 panels) 18s",
+    "  Fig 4: OK (0 panels) 21s",
+    "  Fig 5: OK (2 panels) 13s",
+    "  Fig 6: OK (2 panels) 24s",
+    "[3/4] 综合分析…",
+    "  差异 8 条 | 要点 10 条",
+    "完成 317s"
+  ],
+  "article": {
+    "key": "TBXE6SQA",
+    "title": "Efficacy and safety of GLP-1 agonists in the treatment of T2DM: A systematic review and network meta-analysis",
+    "date": "2025-07-06",
+    "authors": "Ren, Hua, Wu",
+    "doi": "10.1038/s41598-025-09807-0",
+    "journal": "Scientific Reports"
+  },
+  "figures_count": 6,
+  "abstract_chars": 1558,
+  "intro_chars": 4000,
+  "figures_done": 6,
+  "figures": [
+    {
+      "index": 1,
+      "ok": true,
+      "panels": 1,
+      "gist": "本图核心结论一句话：该图通过文献筛选流程和偏倚风险评估，系统性地确立了纳入网状Meta分析的64项高质量研究及其数据基础。",
+      "crop": [
+        35.1,
+        6.3,
+        562.3,
+        626.3
+      ]
+    },
+    {
+      "index": 2,
+      "ok": true,
+      "panels": 1,
+      "gist": "本图核心结论一句话：通过Cochrane工具评估，纳入的64项研究整体偏倚风险较低，但部分关键环节（如盲法、选择性报告）仍存在中高风险，提示结果需谨慎解读。",
+      "crop": [
+        35.1,
+        6.3,
+        560.2,
+        595.0
+      ]
+    },
+    {
+      "index": 3,
+      "ok": true,
+      "panels": 0,
+      "gist": "本图核心结论一句话",
+      "crop": [
+        35.1,
+        6.3,
+        560.2,
+        616.8
+      ]
+    },
+    {
+      "index": 4,
+      "ok": true,
+      "panels": 0,
+      "gist": "本图核心结论一句话",
+      "crop": [
+        35.1,
+        6.3,
+        560.2,
+        616.8
+      ]
+    },
+    {
+      "index": 5,
+      "ok": true,
+      "panels": 2,
+      "gist": "本图核心结论一句话：通过网状meta分析网络图展示了不同降糖药物在降低HbA1c和空腹血糖（FPG）方面的相对疗效及证据网络结构，揭示Tirzepatide在F",
+      "crop": [
+        35.1,
+        6.3,
+        562.3,
+        625.2
+      ]
+    },
+    {
+      "index": 6,
+      "ok": true,
+      "panels": 2,
+      "gist": "本图通过网状Meta分析网络图分别呈现了HbA1c和FPG两个主要结局指标下各降糖药物之间的直接与间接比较关系，证实了所纳入研究构建的证据网络具有良好的覆盖性与",
+      "crop": [
+        35.1,
+        6.3,
+        562.2,
+        423.0
+      ]
+    }
+  ],
+  "diff_count": 8,
+  "key_point_count": 10,
+  "synthesis": {
+    "figure_logical_structure": "图1：通过文献筛选流程图展示了从12074篇文献中逐步筛选并最终纳入64项随机对照试验（共25572例患者）的过程，确立了网状Meta分析的数据基础。（角色：建立模型/数据纳入流程）\n图2：通过Cochrane偏倚风险评估工具展示纳入研究的质量，64项研究整体偏倚风险为中低水平，但主要存在实施偏倚（performance bias）和其他偏倚，提示解释结果时需谨慎。（角色：验证假设/质量控制）\n图3：通过网状关系图分别呈现HbA1c（53项试验，21486例患者）和FPG（41项试验，17621例患者）两种主要结局指标下各药物间的直接和间接比较关系，证明证据网络具有较好的覆盖性和连接性。（角色：建立模型/证据网络结构）\n图4：森林图显示各GLP-1受体激动剂与安慰剂及传统抗糖尿病药物相比在HbA1c降幅上的平均差异（MD）及95%置信区间，揭示Tirzepatide降HbA1c效果最强，Semaglutide次之，Liraglutide第三，而Lixisenatide最弱；与传统药物相比，仅部分药物有显著优势。（角色：对比条件/量化疗效）\n图5：森林图显示各药物与安慰剂及传统药物相比在FPG降幅上的平均差异，揭示Tirzepatide在FPG降幅上显著优于其他药物，Semaglutide和Liraglutide次之；与传统药物相比只有Tirzepatide对FPG有显著降低。（角色：揭示机制/量化疗效）\n图6：将胰岛素、二甲双胍、磺脲类、DPP-4抑制剂和SGLT-2抑制剂合并为“传统抗糖尿病药物”，并合并口服和注射Semaglutide后的网络Meta分析森林图，进一步对比GLP-1受体激动剂与传统药物的HbA1c和FPG疗效，显示Tirzepatide、Semaglutide、Liraglutide等具有显著降糖优势，而Lixisenatide甚至可能劣于传统药物。（角色：对比条件/综合疗效）\n整体逻辑：图1→图2建立数据基础和质量可信度；图3展示证据网络结构；图4和图5分别对HbA1c和FPG两种主要疗效指标进行各药物间及与传统药物的对比；图6合并传统药物类别后给出更简洁的最终比较结果，从而支撑摘要和结论中的疗效排序及临床推荐。",
+    "differences": [
+      {
+        "type": "omission",
+        "figure": "Fig. 1",
+        "point_zh": "图表展示了完整的文献筛选数量（12074篇到64篇）及筛选流程，但摘要和引言均未提及这一具体过程。",
+        "evidence_quote_en": "The flowchart of the systematic search and selection process was presented in Fig. 1. A total of 12,074 relevant articles in PubMed (n=1,596), Embase (n=3,496), Cochrane (n=4,639), Web of Science (n=2,265) and Chinese database (78) were yielded through systematic literature search. After removing duplicate articles, 8,523 titles and abstracts were reviewed. Finally, 64 full-text articles involving 25,572 patients were included for the NMA.",
+        "evidence_zh": "系统检索和筛选过程的流程图见图1。通过系统检索共获得12,074篇相关文献（PubMed 1,596篇、Embase 3,496篇、Cochrane 4,639篇、Web of Science 2,265篇、中文数据库78篇）。去除重复后，8,523篇标题和摘要被筛查。最终纳入64篇全文，涉及25,572例患者。",
+        "location_hint": "Results - Literature search and study characteristics"
+      },
+      {
+        "type": "omission",
+        "figure": "Fig. 2",
+        "point_zh": "图表揭示了纳入研究整体偏倚风险为中低水平，且主要源于实施偏倚和其他偏倚；摘要与引言未报告这一质量评估结果。",
+        "evidence_quote_en": "Figure 2 showed the risk assessment using the Cochrane Collaboration risk assessment tool. The overall risk was moderate to low, which was mainly caused by performance bias and other bias.",
+        "evidence_zh": "图2展示了使用Cochrane协作网偏倚风险评估工具进行的评估。总体偏倚风险为中低水平，主要来自实施偏倚和其他偏倚。",
+        "location_hint": "Results - Literature search and study characteristics / Quality assessment"
+      },
+      {
+        "type": "omission",
+        "figure": "Fig. 3",
+        "point_zh": "图3展示了HbA1c和FPG两个主要结局的证据网络结构，说明网络的覆盖性和连接性，但摘要/引言未提及证据网络的结构信息。",
+        "evidence_quote_en": "Analysis of primary outcome HbA1-c was conducted in 53 trails with 21,486 patients and the network plot was shown in Fig. 3A. Analysis of primary outcome FPG was conducted in 41 trails with 17,621 patients and the network plot was shown in Fig. 3B.",
+        "evidence_zh": "主要结局HbA1c的分析纳入53项试验、21,486例患者，网络图见图3A。主要结局FPG的分析纳入41项试验、17,621例患者，网络图见图3B。",
+        "location_hint": "Results - Outcome 1: HbA1-c / Outcome 2: FPG"
+      },
+      {
+        "type": "omission",
+        "figure": "Fig. 4, Fig. 5",
+        "point_zh": "图表显示与传统抗糖尿病药物相比，仅Tirzepatide在FPG上有显著降低，且多数GLP-1RA在HbA1c或FPG上与传统药物无显著差异（如Lixisenatide甚至可能升高HbA1c/FPG）；摘要只报告了与安慰剂比较的降幅排序，未提及与传统药物比较的这些具体劣势。",
+        "evidence_quote_en": "Compared to insulin, metformin sulfonylureas, DDP-4 inhibitors and SGLT-2 inhibitors, only tirzepatide showed statistically significant reduction in FPG from baseline. Compared to traditional antidiabetic drugs, tirzepatide (MD: −1.5%, 95%CI: −1.9, −1.1), semaglutide (MD: −0.73%, 95%CI: −0.91, −0.55), liraglutide (MD: −0.4%, 95%CI: −0.54, −0.26), EQW (MD: −0.36%, 95%CI: −0.6, −0.12) and dulaglutide (MD: −0.34%, 95%CI: −0.49, −0.2) showed statistically significant reduction in HbA1-c from baseline, while EBID and albiglutide showed no statistically significant difference. Lixisenatide (MD: 0.23%, 95%CI: 0.002, 0.45) had statistically significant increase in HbA1-c in comparison to other hypoglycemic agents.",
+        "evidence_zh": "与胰岛素、二甲双胍、磺脲类、DPP-4抑制剂和SGLT-2抑制剂相比，只有Tirzepatide在FPG方面有统计学意义的降低。与传统抗糖尿病药物比较，Tirzepatide（MD: -1.5%）、Semaglutide（MD: -0.73%）、Liraglutide（MD: -0.4%）、周制剂艾塞那肽（MD: -0.36%）和Dulaglutide（MD: -0.34%）在HbA1c上有统计学意义降低，而EBID和Albiglutide无显著差异。Lixisenatide与传统药物相比，HbA1c反而显著升高（MD: 0.23%）。",
+        "location_hint": "Results - Outcome 1: HbA1-c / Outcome 2: FPG"
+      },
+      {
+        "type": "omission",
+        "figure": "Fig. 6",
+        "point_zh": "图6展示了将多种传统药物合并为一类后GLP-1RA与传统药物的直接对比结果（如Tirzepatide vs 传统药物 HbA1c MD -1.5%，FPG MD -1.8mmol/L），摘要只报告了与安慰剂比较的数值，未报告与传统药物合并类别的比较结果。",
+        "evidence_quote_en": "Compared to traditional antidiabetic drugs, tirzepatide (MD: −1.5%, 95%CI: −1.9, −1.1), semaglutide (MD: −0.73%, 95%CI: −0.91, −0.55), liraglutide (MD: −0.4%, 95%CI: −0.54, −0.26)... Compared to traditional antidiabetic drugs, tirzepatide (MD: −1.8mmol/L, 95%CI: −2.6, −1.0), semaglutide (MD: −0.69mmol/L, 95%CI: −1.2, −0.19) showed statistically significant reduction in FPG from baseline.",
+        "evidence_zh": "与传统抗糖尿病药物相比，Tirzepatide（MD: -1.5%）、Semaglutide（MD: -0.73%）、Liraglutide（MD: -0.4%）等在HbA1c方面显著降低；在FPG方面，Tirzepatide（MD: -1.8 mmol/L）和Semaglutide（MD: -0.69 mmol/L）显著降低。",
+        "location_hint": "Results - Outcome 1: HbA1-c / Outcome 2: FPG"
+      },
+      {
+        "type": "omission",
+        "figure": "Fig. 4, Fig. 5, Fig. 6",
+        "point_zh": "图表比较结果显示长期GLP-1RA（如Tirzepatide、Semaglutide、Liraglutide）在降HbA1c和FPG方面优于短效GLP-1RA（如EBID、Lixisenatide），但摘要和引言均未明确点出“长效优于短效”这一总体模式。",
+        "evidence_quote_en": "In this systematic review and NMA involving 64 studies with a total of 25,572 participants, long-acting GLP-1RAs demonstrated more significant reductions in HbA1-c and FPG compared to short-acting GLP-1 RAs. In particular, tirzepatide, semaglutide and liraglutide treatments showed greater reductions in HbA1-c and FPG levels in comparison to other GLP-1 RAs, traditional antidiabetic drugs as well as placebo.",
+        "evidence_zh": "在这项纳入了64项研究共25,572名参与者的系统评价和网状Meta分析中，长效GLP-1受体激动剂与短效GLP-1受体激动剂相比，在HbA1c和FPG方面显示出更显著的降低。特别是Tirzepatide、Semaglutide和Liraglutide在HbA1c和FPG方面的降低幅度大于其他GLP-1受体激动剂、传统抗糖尿病药物以及安慰剂。",
+        "location_hint": "Discussion"
+      },
+      {
+        "type": "overview_only",
+        "figure": "Main text Fig. 1-6; Supplementary S7/S8/S13-S16",
+        "point_zh": "摘要/引言中关于所有GLP-1RA对BMI、SBP、DBP、TC、HDL-C、LDL-C无显著差异，以及体重下降、胃肠道不良反应、低血糖风险的详细结果，在主文图1-6中并没有直接呈现；这些证据来自补充图表，主图仅覆盖主要疗效结局（HbA1c和FPG）。",
+        "evidence_quote_en": "Compared to placebo, all treatments showed no statistically significant differences in BMI, SBP, DBP, TC, HDL-C and LDL-C. Tirzepatide (MD: −9.1 kg, 95% CI: −11, −7.4) > semaglutide (MD: −2.8 kg, 95% CI: −3.9, −1.8) > EBID (MD: −1.8 kg, 95% CI: −3, −0.64) > liraglutide (MD: −1.2 kg, 95% CI: −2.2, −0.12) had significant reduction in body weight in comparison to placebo. Semaglutide, dulaglutide, liraglutide, lixisenatide and tirzepatide had higher risk of nausea, diarrhoea, vomiting, constipation, dyspepsia and decreased appetite in the comparison to placebo. EBID (RR: 3.3, 95%CI: 1.6, 6.9) and semaglutide (RR: 4.6, 95%CI: 1.6, 10.0) significantly increased the risk of hypoglycemia while the other GLP-1 RAs showed no statistically significant difference in hypoglycemia compared to placebo.",
+        "evidence_zh": "与安慰剂相比，所有药物在BMI、SBP、DBP、TC、HDL-C和LDL-C方面均无统计学显著差异。在体重方面，Tirzepatide（MD: -9.1 kg）> Semaglutide（MD: -2.8 kg）> EBID（MD: -1.8 kg）> Liraglutide（MD: -1.2 kg）较安慰剂显著降低。Semaglutide、Dulaglutide、Liraglutide、Lixisenatide和Tirzepatide较安慰剂有更高的恶心、腹泻、呕吐、便秘、消化不良和食欲减退风险。EBID（RR: 3.3）和Semaglutide（RR: 4.6）显著增加低血糖风险，而其他GLP-1受体激动剂与安慰剂相比低血糖无显著差异。",
+        "location_hint": "Results - Secondary outcomes / Adverse events"
+      },
+      {
+        "type": "overview_only",
+        "figure": "Fig. 4-6 combined with safety results (Supplementary)",
+        "point_zh": "摘要和结论中给出的临床个体化推荐（如肥胖患者更适合Tirzepatide，正常体重患者为避免低血糖更推荐Liraglutide）是基于疗效和安全性结果的综合推断，但主图本身未直接显示这种综合推荐，需要结合补充图表中的体重和低血糖数据才能得到。",
+        "evidence_quote_en": "Therefore, hypoglycemic effect (HbA1-c and FPG), body weight, hypoglycemia and gastrointestinal symptoms are important factors when choosing GLP-1 RAs. The NMA suggests tirzepatide, semglutide and liraglutide are the three most effective GLP-1 RAs for T2DM. Given that semaglutide may increase the risk of hypoglycemia, tirzepatide appears to be a more suitable option for the treatment of T2DM in patients with obesity. For individuals with normal weight, both semaglutide and liraglutide are generally more effective for treating T2DM compared to other GLP-1 RAs. However, considering the potential for semaglutide to cause hypoglycemia, liraglutide may be the optimal choice for T2DM treatment to minimize the risk of hypoglycemia.",
+        "evidence_zh": "因此，降糖效果（HbA1c和FPG）、体重、低血糖和胃肠道症状是选择GLP-1受体激动剂时的重要因素。NMA提示Tirzepatide、Semaglutide和Liraglutide是治疗T2DM最有效的三种GLP-1受体激动剂。鉴于Semaglutide可能增加低血糖风险，Tirzepatide似乎是肥胖T2DM患者更合适的选择。对于体重正常者，Semaglutide和Liraglutide通常比其他GLP-1受体激动剂更有效。然而，考虑到Semaglutide可能引起低血糖，Liraglutide可能是最大限度降低低血糖风险的T2DM治疗最佳选择。",
+        "location_hint": "Discussion / Conclusions"
+      }
+    ],
+    "key_points": [
+      "通过系统检索纳入64项RCT、25,572例T2DM患者，总体偏倚风险中低。",
+      "与安慰剂相比，所有GLP-1受体激动剂均显著降低HbA1c；其中Tirzepatide降幅最大（-2.3%），Semaglutide次之（-1.5%），Liraglutide第三（-1.2%）。",
+      "FPG方面Tirzepatide同样降幅最大（-3.1 mmol/L），Semaglutide（-2.0 mmol/L）和Liraglutide（-1.6 mmol/L）次之。",
+      "与传统抗糖尿病药物相比，Tirzepatide在HbA1c和FPG上均有显著优势，Semaglutide和Liraglutide在HbA1c上也有优势；但Lixisenatide的HbA1c和FPG反而不如传统药物。",
+      "长效GLP-1受体激动剂（Tirzepatide、Semaglutide、Liraglutide、Dulaglutide等）总体降糖疗效优于短效药物（EBID、Lixisenatide）。",
+      "体重方面，Tirzepatide减重最显著（-9.1 kg），其次为Semaglutide（-2.8 kg）、EBID（-1.8 kg）和Liraglutide（-1.2 kg）；但BMI、血压和血脂谱与安慰剂无显著差异。",
+      "GLP-1受体激动剂总体增加胃肠道不良反应风险（恶心、腹泻、呕吐等）。",
+      "Semaglutide和EBID显著增加低血糖风险，而Liraglutide和Lixisenatide与传统药物相比反而降低低血糖风险。",
+      "临床推荐：肥胖T2DM患者优先选择Tirzepatide；正常体重患者为减少低血糖风险，Liraglutide可能是最优选择，Semaglutide疗效好但需注意低血糖风险。",
+      "本NMA是截至目前覆盖最全面的GLP-1受体激动剂网状Meta分析，同时比较了与传统药物的疗效和安全性，为个体化治疗提供了证据。"
+    ]
+  },
+  "html": "C:\\Users\\29346\\Desktop\\figexplain-tool\\validation\\TBXE6SQA.html",
+  "elapsed_s": 317
+}
