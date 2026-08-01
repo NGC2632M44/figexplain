@@ -177,10 +177,25 @@ def build_note_html(article: dict, figures: list[Figure],
 
 def write_note(article: dict, figures: list[Figure],
                figure_explanations: list[dict], synthesis: dict) -> bool:
-    """Build the note HTML and write it back to Zotero as a top-level note."""
+    """Build the note HTML and write it back to Zotero.
+
+    Tries to attach the note as a child of the article item; if the local
+    Zotero API can't do that, falls back to a top-level note and prepends a
+    prominent hint telling the user to drag it under the article.
+    """
     note_html = build_note_html(article, figures, figure_explanations, synthesis)
     title = article.get("title", "未命名")
-    # leading header in the note so Zotero shows a meaningful title
-    note_html = f"<h1>图表解读：{html.escape(title)}</h1>" + note_html
-    tags = [f"fig-explain-{article.get('key', '')}", "fig-explain"]
-    return create_note(note_html, tags=tags)
+    parent_key = article.get("key", "")
+    tags = [f"fig-explain-{parent_key}", "fig-explain"]
+    result = create_note(note_html, tags=tags, parent_item_key=parent_key or None)
+    if not result.get("parented"):
+        hint = (
+            '<div style="margin:8px 0;padding:8px 10px;background:#fff8e1;'
+            'border-left:4px solid #f0ad4e;border-radius:3px;font-size:13px;">'
+            '⚠️ 此笔记为顶层条目（Zotero 本地 API 无法自动挂到父文献下）。'
+            '请在 Zotero 中将其<strong>拖动到</strong>对应文献'
+            f'「{html.escape(title)}」下，使其成为该文献的子笔记。'
+            '</div>'
+        )
+        create_note(hint + note_html, tags=tags, parent_item_key=None)
+    return True
