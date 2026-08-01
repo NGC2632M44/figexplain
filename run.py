@@ -124,9 +124,82 @@ def resolve_pdf(article_key: str, storage_dir: str) -> str:
     return candidates[0].replace("\\", "/") if candidates else ""
 
 
+def run_pdf_mode(pdf_path: str, settings: dict) -> None:
+    """直接解读一个 PDF(拖放/文件夹模式):不查 Zotero,结果 HTML 自动打开。
+
+    输出:figexplain-out/<文件名>.html;完成后 os.startfile 打开浏览器。
+    """
+    import hashlib
+    import time
+    import subprocess
+    from figexplain import note_writer as nw
+
+    pdf_path = (pdf_path or "").strip().strip('"')
+    if not pdf_path or not os.path.isfile(pdf_path):
+        print(f"✗ 文件不存在: {pdf_path}")
+        sys.exit(1)
+    base = os.path.splitext(os.path.basename(pdf_path))[0]
+    key = hashlib.md5(pdf_path.encode("utf-8")).hexdigest()[:8].upper()
+    article = {"key": key, "title": base, "date": "", "authors": "", "doi": ""}
+    out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figexplain-out")
+    os.makedirs(out_dir, exist_ok=True)
+    out_html = os.path.join(out_dir, f"{base}.html")
+
+    print(f"PDF: {pdf_path}")
+    print("[1/4] 提取图表与文本…")
+    figures = pe.extract_figures(pdf_path)
+    if not figures:
+        print("✗ 未提取到任何图表(可能是扫描版或无 Fig 标题)。")
+        sys.exit(1)
+    full_text = pe.fulltext(pdf_path)
+    abstract, intro = pe.abstract_and_intro(full_text)
+    print(f"  图 {len(figures)} 张 | 摘要 {len(abstract)} 字 | 引言 {len(intro)} 字")
+
+    e_base = settings.get("explain_base_url") or settings["openai_base_url"]
+    e_key = settings.get("explain_api_key") or settings["openai_api_key"]
+    e_model = settings.get("explain_model") or settings.get("openai_model") or "gpt-4o"
+    print(f"[2/4] 逐图解读(模型 {e_model})…")
+    figure_explanations = []
+    for i, fig in enumerate(figures):
+        t0 = time.time()
+        try:
+            fe = llm.explain_figure(fig, e_base, e_key, e_model)
+            fe["index"] = fig.index
+            print(f"  Fig {fig.index}: OK ({len(fe.get('panels', []))} panels) {time.time()-t0:.0f}s")
+        except Exception as e:
+            print(f"  Fig {fig.index}: 失败 {str(e)[:80]}")
+            fe = {"index": fig.index, "panels": [], "gist_zh": f"(失败: {e})", "logical_role": ""}
+        figure_explanations.append(fe)
+
+    s_base = settings.get("synthesize_base_url") or settings["openai_base_url"]
+    s_key = settings.get("synthesize_api_key") or settings["openai_api_key"]
+    s_model = settings.get("synthesize_model") or settings.get("openai_model") or "gpt-4o"
+    print(f"[3/4] 综合分析(模型 {s_model})…")
+    try:
+        synthesis = llm.synthesize(figure_explanations, abstract, intro, full_text, s_base, s_key, s_model)
+        print(f"  差异 {len(synthesis.get('differences', []))} 条 | 要点 {len(synthesis.get('key_points', []))} 条")
+    except Exception as e:
+        synthesis = {"figure_logical_structure": "", "differences": [], "key_points": [], "_raw": str(e)}
+        print(f"  综合分析失败: {str(e)[:80]}")
+
+    html = nw.build_note_html(article, figures, figure_explanations, synthesis)
+    with open(out_html, "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"[4/4] 结果: {out_html}")
+    try:
+        os.startfile(out_html)  # 自动打开浏览器
+    except Exception:
+        pass
+    print("完成 ✅")
+
+
 def main():
     cfg.ensure_deps()
     settings = cfg.load_config()
+    # 0. --pdf <path>:直接解读一个 PDF 文件(拖放/文件夹模式,不依赖 Zotero)
+    #    必须最先处理,跳过任何交互配置
+    if "--pdf" in sys.argv:
+        return run_pdf_mode(sys.argv[sys.argv.index("--pdf") + 1], settings)
     # 非交互模式:--no-interactive / stdin 非 TTY / FIGEXPLAIN_NONINTERACTIVE=1
     # (skill/MCP/批量调用必需:直接使用已存配置,不阻塞等 input())
     noninteractive = ("--no-interactive" in sys.argv
