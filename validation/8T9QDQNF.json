@@ -1,0 +1,174 @@
+{
+  "input_key": "8T9QDQNF",
+  "status": "done",
+  "steps": [
+    "文献:Cdk5 Contributes to Diabetic Islet β Cell and Kidney Injury  | The FASEB Journal | 2025-10",
+    "PDF:Tao 等 - 2025 - Cdk5 Contributes to Diabetic Islet β Cell and Kidney In",
+    "[1/4] 图 6 张 | 摘要 2974 字 | 引言 3625 字 | 正文 35534 字",
+    "[2/4] 逐图解读…",
+    "  Fig 1: OK (4 panels) 42s",
+    "  Fig 2: OK (4 panels) 25s",
+    "  Fig 3: OK (3 panels) 30s",
+    "  Fig 4: OK (6 panels) 33s",
+    "  Fig 5: OK (3 panels) 47s",
+    "  Fig 6: OK (4 panels) 14s",
+    "[3/4] 综合分析…",
+    "  差异 6 条 | 要点 10 条",
+    "完成 290s"
+  ],
+  "article": {
+    "key": "57JA9WMI",
+    "title": "Cdk5 Contributes to Diabetic Islet β Cell and Kidney Injury by Impairing Autophagy",
+    "date": "2025-10-31",
+    "authors": "Tao, Wang, Liu",
+    "doi": "10.1096/fj.202500483RRRRR",
+    "journal": "The FASEB Journal"
+  },
+  "figures_count": 6,
+  "abstract_chars": 2974,
+  "intro_chars": 3625,
+  "figures_done": 6,
+  "figures": [
+    {
+      "index": 1,
+      "ok": true,
+      "panels": 4,
+      "gist": "本图核心结论一句话：Cdk5在糖尿病患者和db/db糖尿病小鼠的胰岛β细胞中均显著上调，且定位于β细胞内。",
+      "crop": [
+        4.0,
+        4.0,
+        591.3,
+        553.7
+      ]
+    },
+    {
+      "index": 2,
+      "ok": true,
+      "panels": 4,
+      "gist": "本图核心结论一句话：Cdk5在糖尿病小鼠中异常高表达并伴随β细胞损伤，抑制Cdk5可减轻高血糖并部分恢复β细胞功能。",
+      "crop": [
+        4.0,
+        4.0,
+        591.3,
+        553.7
+      ]
+    },
+    {
+      "index": 3,
+      "ok": true,
+      "panels": 3,
+      "gist": "本图核心结论一句话：Cdk5在高糖环境下通过抑制自噬流和诱导凋亡导致胰岛β细胞损伤，其敲低可部分恢复自噬并减轻细胞死亡。",
+      "crop": [
+        4.0,
+        4.0,
+        591.3,
+        553.7
+      ]
+    },
+    {
+      "index": 4,
+      "ok": true,
+      "panels": 6,
+      "gist": "本图核心结论一句话：Cdk5在糖尿病肾病患者及小鼠模型的足细胞中高表达，并伴随足细胞标志物下调，表明Cdk5异常激活可能参与了DN的足细胞损伤过程。",
+      "crop": [
+        4.0,
+        4.0,
+        591.3,
+        553.7
+      ]
+    },
+    {
+      "index": 5,
+      "ok": true,
+      "panels": 3,
+      "gist": "本图核心结论一句话：Cdk5抑制通过减轻肾小球结构损伤、降低尿蛋白和改善肾小球硬化程度，有效缓解糖尿病肾病小鼠的肾脏损伤。",
+      "crop": [
+        4.0,
+        4.0,
+        591.3,
+        553.7
+      ]
+    },
+    {
+      "index": 6,
+      "ok": true,
+      "panels": 4,
+      "gist": "本图核心结论是Cdk5通过抑制自噬并促进凋亡导致糖尿病肾损伤，而抑制Cdk5可部分逆转这一病理过程。",
+      "crop": [
+        4.0,
+        4.0,
+        591.3,
+        553.7
+      ]
+    }
+  ],
+  "diff_count": 6,
+  "key_point_count": 10,
+  "synthesis": {
+    "figure_logical_structure": "图1：证明Cdk5在人糖尿病胰岛β细胞和db/db小鼠胰岛β细胞中均显著上调，定位于β细胞（与胰岛素共定位）。功能是建立“Cdk5异常表达”这一核心模型。\n图2：证明在糖尿病小鼠中Cdk5及其激活因子p35/25高表达，抑制Cdk5可降低血糖、恢复胰岛素分泌，说明Cdk5参与胰岛β细胞损伤。功能是由“表达异常”推进到“功能影响”。\n图3：证明高糖环境下Cdk5高表达抑制自噬（p62上调、Beclin1/LC3B下调、LAMP1-LC3B共定位减少）并促进凋亡（Cleaved-caspase3上调），敲低Cdk5可部分恢复自噬并减少凋亡。功能是揭示Cdk5损伤胰岛β细胞的分子机制。\n图4：证明Cdk5在糖尿病肾病（DN）患者肾小球及db/db小鼠肾小球足细胞中高表达，且随DN进展增加，同时足细胞标志物podocin和synaptopodin下调。功能是将Cdk5的病理作用从胰岛β细胞扩展到肾脏足细胞。\n图5：证明抑制Cdk5可降低DN小鼠尿蛋白、减少系膜细胞/系膜基质增生、减小肾小球体积和肾小球硬化评分。功能是验证Cdk5抑制对糖尿病肾病的治疗性保护作用。\n图6：证明DN小鼠肾脏中自噬受损（p62上调、Beclin1/LC3B下调、LAMP1-LC3B共定位减少）伴凋亡增加（C-caspase3上调），敲低Cdk5可部分逆转这些变化并恢复足细胞标志物表达。功能是揭示Cdk5损伤肾脏的分子机制，与图3形成平行结构。整体逻辑：图1→2→3依次从表达到功能再到机制的胰岛β细胞损伤链条；图4→5→6依次为肾脏足细胞损伤的“表达异常→保护效应→机制”链条；两链条平行，共同支撑“Cdk5通过抑制自噬和促进凋亡导致糖尿病及糖尿病肾病损伤”的核心结论。",
+    "differences": [
+      {
+        "type": "overview_only",
+        "figure": "Fig. 4B",
+        "point_zh": "图中显示Cdk5表达随DN进展（分期）逐渐增加，但摘要和引言均未提及这一剂量/分期依赖关系。",
+        "evidence_quote_en": "the expression level of Cdk5 gradually increased with DN progression (Figure 4B).",
+        "evidence_zh": "Cdk5的表达水平随着DN进展逐渐增加（图4B）。",
+        "location_hint": "3.4 Cdk5 is Upregulated in the Glomeruli of Patients With DN and Diabetes"
+      },
+      {
+        "type": "omission",
+        "figure": "Fig. 2",
+        "point_zh": "图2显示Cdk5敲低后db/db小鼠血糖降低，但摘要和引言只提到部分恢复胰岛素分泌和β细胞功能，未明确提及血糖下降。",
+        "evidence_quote_en": "Cdk5 knockdown reduced Cdk5 and p35/25 expression, restored insulin secretion levels (Figure 2A,B,D), and decreased blood glucose levels in db/db mice (Figure 2C).",
+        "evidence_zh": "Cdk5敲低降低了Cdk5和p35/25的表达，恢复了胰岛素分泌水平，并降低了db/db小鼠的血糖水平。",
+        "location_hint": "3.2 Cdk5 Induces Islet β Cell Damage in Diabetic Mice"
+      },
+      {
+        "type": "omission",
+        "figure": "Fig. 3 和 Fig. 6",
+        "point_zh": "图3和图6用LAMP1与LC3B共定位斑点减少来证明自噬流受损，摘要和引言中仅说“自噬受损”，未具体说明自噬流被阻断。",
+        "evidence_quote_en": "the co-localization spots of LAMP1 and LC3B were decreased in db/db mice, whereas the co-localization spots of LAMP1 and LC3B were increased after Lv-Cdk5 shRNA treatment (Figure 3C).",
+        "evidence_zh": "db/db小鼠中LAMP1和LC3B共定位斑点减少，而Lv-Cdk5 shRNA处理后LAMP1和LC3B共定位斑点增加（图3C）。",
+        "location_hint": "3.3 Cdk5 Induces Autophagy Impairment and Apoptosis of Islet β Cells in Diabetic Mice"
+      },
+      {
+        "type": "omission",
+        "figure": "Fig. 5",
+        "point_zh": "图5显示Cdk5抑制减轻肾小球系膜增生、系膜基质增多、肾小球体积增大和硬化评分，摘要中只笼统提到“减少肾脏损伤”，未列出具体的病理学改善指标。",
+        "evidence_quote_en": "Cdk5 inhibition attenuated mesangial cell and mesangial matrix proliferation and reduced glomerular size and glomerulosclerosis scores in db/db mice (Figure 5C).",
+        "evidence_zh": "Cdk5抑制减弱了系膜细胞和系膜基质增殖，并降低了db/db小鼠的肾小球体积和肾小球硬化评分（图5C）。",
+        "location_hint": "3.5 Inhibition of Cdk5 Alleviates Kidney Injury in Diabetic Nephropathy Mice"
+      },
+      {
+        "type": "omission",
+        "figure": "Fig. 4",
+        "point_zh": "图4对比了DN患者与其他肾病（MCD、IgAN）及正常对照，显示Cdk5在DN中特异性升高，摘要/引言无此对照信息。",
+        "evidence_quote_en": "the glomerular expression of Cdk5 in patients with DN was significantly higher than that in the control group and patients with other kidney diseases (Figure 4A)",
+        "evidence_zh": "DN患者肾小球中Cdk5的表达显著高于对照组和其他肾脏疾病患者（图4A）。",
+        "location_hint": "3.4 Cdk5 is Upregulated in the Glomeruli of Patients With DN and Diabetes"
+      },
+      {
+        "type": "overview_only",
+        "figure": "Fig. 1-6",
+        "point_zh": "摘要/引言强调机制待阐明、本研究提供新的治疗方向，但图表证据并未直接证明“靶向Cdk5是显著的治疗选择”这一临床转化结论，属过度推测。",
+        "evidence_quote_en": "In conclusion, Cdk5 is involved in islet β cell and podocyte damage in a high glucose environment; thus, targeting Cdk5 may be a significant therapeutic option for diabetes and its complications.",
+        "evidence_zh": "总之，Cdk5参与高糖环境下胰岛β细胞和足细胞损伤；因此，靶向Cdk5可能是糖尿病及其并发症的重要治疗选择。",
+        "location_hint": "Abstract"
+      }
+    ],
+    "key_points": [
+      "Cdk5在人类2型糖尿病患者的胰岛β细胞和db/db小鼠胰岛β细胞中显著上调，并与胰岛素共定位。",
+      "Cdk5在糖尿病小鼠胰腺中与其激活因子p35/25共同高表达；敲低Cdk5降低血糖并部分恢复胰岛素分泌。",
+      "Cdk5通过抑制β细胞自噬（p62升高、Beclin1/LC3B降低、自噬流受阻）并促进凋亡（Cleaved-caspase3升高）导致胰岛β细胞损伤。",
+      "Cdk5在DN患者肾小球和db/db小鼠足细胞中高表达，且随DN进展增加；足细胞标志物podocin和synaptopodin相应下调。",
+      "抑制Cdk5降低DN小鼠尿白蛋白、减轻系膜增生/系膜基质增多、肾小球体积增大及肾小球硬化。",
+      "Cdk5抑制通过恢复自噬（p62降低、Beclin1/LC3B升高、LAMP1-LC3B共定位增加）并减少凋亡（C-caspase3降低）来保护足细胞。",
+      "Cdk5在胰岛β细胞和足细胞中通过相似的“自噬抑制+凋亡激活”机制造成损伤，构成平行的病理通路。",
+      "敲低Cdk5在胰腺和肾脏中均能部分逆转自噬损伤和凋亡，提示Cdk5是糖尿病及其并发症（尤其是DN）的潜在治疗靶点。",
+      "Cdk5的表达上调可能通过p35剪切为p25而过度激活，在糖尿病高糖环境下介导下游细胞损伤。",
+      "本研究结果为靶向Cdk5治疗糖尿病及相关并发症提供实验依据，但具体分子机制（如自噬流阻断的精确节点）仍需进一步研究。"
+    ]
+  },
+  "html": "C:\\Users\\29346\\Desktop\\figexplain-tool\\validation\\57JA9WMI.html",
+  "elapsed_s": 290
+}
