@@ -58,38 +58,83 @@ def pick_article() -> dict:
 
 
 def resolve_pdf(article_key: str, storage_dir: str) -> str:
-    """Find the PDF attachment path for an article item key."""
+    """Find the PDF attachment path for an article item key.
+
+    Robust to common misconfigurations of zotero_storage_dir:
+      - storage_dir points at .../storage            (correct)
+      - storage_dir points at .../storage/<KEY>      (one level too deep)
+    Always verifies the file exists on disk before returning; falls back to a
+    directory listing of the attachment-key folder when the recorded filename
+    is missing or has encoding issues.
+    """
+    att_key = None
+    filename = ""
+
     # article_key may be the parent (regular item) or an attachment itself
-    att = None
-    # try as parent -> find PDF child attachment
     try:
         att = zl.find_pdf_attachment(article_key)
+        if att:
+            att_key = att["key"]
+            filename = att.get("filename", "")
     except Exception:
         att = None
-    if att:
-        return zl.resolve_pdf_path(att["key"], att.get("filename", ""), storage_dir)
-    # maybe the key itself is an attachment
-    try:
-        d = zl.get_item(article_key)
-        if d.get("itemType") == "attachment" and d.get("contentType") == "application/pdf":
-            return zl.resolve_pdf_path(d["key"], d.get("filename", ""), storage_dir)
-    except Exception:
-        pass
-    # last resort: search storage dir for a folder named article_key
-    cand = os.path.join(storage_dir, article_key)
-    pdfs = glob.glob(os.path.join(cand, "*.pdf"))
-    if pdfs:
-        return pdfs[0].replace("\\", "/")
-    return ""
+    if not att_key:
+        # maybe the key itself is an attachment
+        try:
+            d = zl.get_item(article_key)
+            if d.get("itemType") == "attachment" and d.get("contentType") == "application/pdf":
+                att_key = d["key"]
+                filename = d.get("filename", "")
+        except Exception:
+            pass
+
+    # candidate bases: storage_dir as given, plus its parent (covers the
+    # "storage_dir already ends with <KEY>" misconfiguration).
+    storage_dir = (storage_dir or "").rstrip("\\/").replace("\\", "/")
+    bases = [storage_dir]
+    parent = "/".join(storage_dir.split("/")[:-1])
+    if parent and parent not in bases:
+        bases.append(parent)
+
+    candidates = []
+    # 1) exact filename under <base>/<att_key>/
+    if att_key and filename:
+        for b in bases:
+            candidates.append(f"{b}/{att_key}/{filename}")
+    # 2) any *.pdf under <base>/<att_key>/  (filename unknown / encoding issues)
+    if att_key:
+        for b in bases:
+            cand_dir = f"{b}/{att_key}"
+            if os.path.isdir(cand_dir):
+                for f in os.listdir(cand_dir):
+                    if f.lower().endswith(".pdf"):
+                        candidates.append(f"{cand_dir}/{f}")
+    # 3) last resort: any *.pdf under <base>/<article_key>/  (key is the folder)
+    for b in bases:
+        cand_dir = f"{b}/{article_key}"
+        if os.path.isdir(cand_dir):
+            for f in os.listdir(cand_dir):
+                if f.lower().endswith(".pdf"):
+                    candidates.append(f"{cand_dir}/{f}")
+
+    for c in candidates:
+        if c and os.path.isfile(c):
+            return c.replace("\\", "/")
+    # nothing found; return the first candidate for the error message
+    return candidates[0].replace("\\", "/") if candidates else ""
 
 
 def main():
     cfg.ensure_deps()
     settings = cfg.load_config()
-    if not settings.get("openai_api_key") or not settings.get("openai_base_url"):
-        settings = cfg.interactive_config()
-    else:
-        # user chose "input each run" — re-ask to allow overrides, keep saved as defaults
+    # 非交互模式:--no-interactive / stdin 非 TTY / FIGEXPLAIN_NONINTERACTIVE=1
+    # (skill/MCP/批量调用必需:直接使用已存配置,不阻塞等 input())
+    noninteractive = ("--no-interactive" in sys.argv
+                      or not sys.stdin.isatty()
+                      or os.environ.get("FIGEXPLAIN_NONINTERACTIVE") == "1")
+    if "--no-interactive" in sys.argv:
+        sys.argv.remove("--no-interactive")
+    if not noninteractive:
         settings = cfg.interactive_config()
 
     # 1. pick article
@@ -97,8 +142,17 @@ def main():
         key = sys.argv[1].strip()
         try:
             d = zl.get_item(key)
+            # key 可能是 attachment(如直接给 storage 目录名):上溯父条目,
+            # 让标题/key/标签统一用父条目(文献本体)
+            if d.get("itemType") == "attachment" and d.get("parentItem"):
+                try:
+                    p = zl.get_item(d["parentItem"])
+                    if p.get("itemType") in ("journalArticle", "preprint", "bookSection", "thesis", "conferencePaper"):
+                        d = p
+                except Exception:
+                    pass
             article = {
-                "key": key,
+                "key": d.get("key", key),
                 "title": d.get("title", ""),
                 "date": d.get("date", ""),
                 "authors": ", ".join(c.get("lastName", "") for c in d.get("creators", [])[:3]),
@@ -133,16 +187,16 @@ def main():
     abstract, intro = pe.abstract_and_intro(full_text)
     print(f"  摘要 {len(abstract)} 字，引言 {len(intro)} 字，正文 {len(full_text)} 字。")
 
-    # 4. per-figure LLM explanation (vision)
-    base_url = settings["openai_base_url"]
-    api_key = settings["openai_api_key"]
-    model = settings.get("openai_model") or "gpt-4o"
-    print(f"\n[2/4] 调用多模态 LLM 解读每张图（模型 {model}）…")
+    # 4. per-figure LLM explanation (vision)——视觉配置独立(便宜模型)
+    e_base = settings.get("explain_base_url") or settings["openai_base_url"]
+    e_key = settings.get("explain_api_key") or settings["openai_api_key"]
+    e_model = settings.get("explain_model") or settings.get("openai_model") or "gpt-4o"
+    print(f"\n[2/4] 调用多模态 LLM 解读每张图（模型 {e_model}）…")
     figure_explanations = []
     for i, fig in enumerate(figures):
         print(f"  → Figure {fig.index} ({i+1}/{len(figures)})…", end=" ", flush=True)
         try:
-            fe = llm.explain_figure(fig, base_url, api_key, model)
+            fe = llm.explain_figure(fig, e_base, e_key, e_model)
             fe["index"] = fig.index
             n_panels = len(fe.get("panels", []))
             print(f"OK ({n_panels} panels)")
@@ -153,10 +207,14 @@ def main():
         figure_explanations.append(fe)
 
     # 5. synthesis (structure vs abstract/intro, locate in text, key points)
-    print(f"\n[3/4] 综合分析：逻辑结构 vs 摘要/引言，定位正文差异，总结要点…")
+    # ——纯文本,用便宜配置(默认 DeepSeek flash 直连)
+    s_base = settings.get("synthesize_base_url") or settings["openai_base_url"]
+    s_key = settings.get("synthesize_api_key") or settings["openai_api_key"]
+    s_model = settings.get("synthesize_model") or settings.get("openai_model") or "gpt-4o"
+    print(f"\n[3/4] 综合分析：逻辑结构 vs 摘要/引言，定位正文差异，总结要点…(模型 {s_model})")
     try:
         synthesis = llm.synthesize(figure_explanations, abstract, intro,
-                                   full_text, base_url, api_key, model)
+                                   full_text, s_base, s_key, s_model)
         n_diff = len(synthesis.get("differences", []))
         n_kp = len(synthesis.get("key_points", []))
         print(f"  差异/遗漏 {n_diff} 条，关键要点 {n_kp} 条。")
