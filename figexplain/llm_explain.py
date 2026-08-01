@@ -18,16 +18,43 @@ All calls go to an OpenAI-compatible chat/completions endpoint with vision.
 from __future__ import annotations
 import json
 import base64
+import time
 from typing import Any
 
 import requests
 
 from .pdf_extract import Figure
 
+# 连接策略(实测 2026-08-01):
+# - 显式禁用代理:Claude Code 注入的 HTTP(S)_PROXY 转发境外 LLM 端点会断连
+# - 每请求新建连接(Connection: close):babelark 掐断 keep-alive 复用连接
+#   (Session 复用第二次请求必 RemoteDisconnected;逐请求稳定)
+# - Windows 端口耗尽(WinError 10048):靠重试 backoff 等待 TIME_WAIT 释放
+
+# Some vision models take much longer on the first request (cold start /
+# image encoding). Allow a longer per-call timeout and a couple of retries
+# for transient network/timeout errors.
+_DEFAULT_TIMEOUT = 240
+_MAX_RETRIES = 4
+# Per-figure explanation JSON for a multi-panel figure easily exceeds
+# 1500 tokens. The model silently truncates mid-string when it hits
+# max_tokens, producing unbalanced JSON no parser can recover. Bump
+# well above the observed output size so the JSON can finish.
+# (2026-08-01:PNAS 长 caption 图实测 6000 仍截断,提到 10000 + 解析失败重试)
+_FIGURE_MAX_TOKENS = 10000
+_SYNTH_MAX_TOKENS = 8000
+
 
 def _chat(base_url: str, api_key: str, model: str, messages: list[dict],
-          temperature: float = 0.2, max_tokens: int = 1500, timeout: int = 180) -> str:
-    """Call an OpenAI-compatible /v1/chat/completions endpoint, return text."""
+          temperature: float = 0.2, max_tokens: int = 1500,
+          timeout: int = _DEFAULT_TIMEOUT) -> str:
+    """Call an OpenAI-compatible /v1/chat/completions endpoint, return text.
+
+    Retries on transient errors (timeout / connection / 5xx) with a short
+    backoff so a single slow response doesn't fail the whole run. 4xx errors
+    with a body surface immediately (they're usually content/policy rejections
+    that won't be fixed by retrying).
+    """
     url = base_url.rstrip("/")
     if not url.endswith("/v1/chat/completions"):
         if url.endswith("/v1"):
@@ -44,31 +71,84 @@ def _chat(base_url: str, api_key: str, model: str, messages: list[dict],
         "temperature": temperature,
         "max_tokens": max_tokens,
     }
-    resp = requests.post(url, headers=headers, json=payload, timeout=timeout)
-    if resp.status_code >= 400:
-        raise RuntimeError(f"LLM 请求失败 {resp.status_code}: {resp.text[:400]}")
-    data = resp.json()
-    try:
-        return data["choices"][0]["message"]["content"].strip()
-    except (KeyError, IndexError) as e:
-        raise RuntimeError(f"LLM 响应解析失败: {e}; body={str(data)[:300]}") from e
+    last_err = None
+    for attempt in range(_MAX_RETRIES + 1):
+        try:
+            # Connection: close 禁用 keep-alive(babelark 掐复用连接);
+            # proxies=None 禁代理(直连)
+            resp = requests.post(url, headers={**headers, "Connection": "close"},
+                                 json=payload, timeout=timeout,
+                                 proxies={"http": None, "https": None})
+        except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as e:
+            last_err = RuntimeError(f"LLM 网络超时/连接失败: {e}")
+            if attempt < _MAX_RETRIES:
+                # 长 backoff:10048(端口耗尽)需等 TIME_WAIT 释放(120s 级)
+                time.sleep(20 * (attempt + 1))
+                continue
+            raise last_err
+        if resp.status_code >= 500:
+            last_err = RuntimeError(f"LLM 请求失败 {resp.status_code}: {resp.text[:400]}")
+            if attempt < _MAX_RETRIES:
+                time.sleep(3 * (attempt + 1))
+                continue
+            raise last_err
+        if resp.status_code >= 400:
+            raise RuntimeError(f"LLM 请求失败 {resp.status_code}: {resp.text[:400]}")
+        data = resp.json()
+        try:
+            return data["choices"][0]["message"]["content"].strip()
+        except (KeyError, IndexError) as e:
+            raise RuntimeError(f"LLM 响应解析失败: {e}; body={str(data)[:300]}") from e
+    raise last_err  # type: ignore[misc]
 
 
 def _json_response(text: str) -> Any:
-    """Try to extract a JSON object from an LLM text response."""
-    # strip ```json fences if present
+    """Try to extract a JSON object from an LLM text response.
+
+    Tolerant of: ```json fences, prose before/after, thinking tokens
+    prefixed by the gateway, and partial trailing junk.
+    """
     s = text.strip()
+    if not s:
+        raise RuntimeError("empty LLM response")
+    # strip ```json ... ``` fences (and bare ```)
     if s.startswith("```"):
-        # remove first fence line
         s = s.split("\n", 1)[1] if "\n" in s else s
-        if s.endswith("```"):
-            s = s[:-3]
-    # find first { and last }
+    if s.endswith("```"):
+        s = s[:-3]
+    s = s.strip()
+    # find the outermost balanced { ... } by scanning from the first '{'
     start = s.find("{")
-    end = s.rfind("}")
-    if start >= 0 and end > start:
-        s = s[start:end + 1]
-    return json.loads(s)
+    if start < 0:
+        raise RuntimeError(f"no JSON object found in response: {s[:200]!r}")
+    depth = 0
+    in_str = False
+    esc = False
+    end = -1
+    for i in range(start, len(s)):
+        c = s[i]
+        if in_str:
+            if esc:
+                esc = False
+            elif c == "\\":
+                esc = True
+            elif c == '"':
+                in_str = False
+        else:
+            if c == '"':
+                in_str = True
+            elif c == "{":
+                depth += 1
+            elif c == "}":
+                depth -= 1
+                if depth == 0:
+                    end = i
+                    break
+    if end < 0:
+        # unbalanced — try json.loads on the tail anyway for a better error
+        raise RuntimeError(f"unbalanced JSON in response: {s[start:start+200]!r}")
+    obj_str = s[start:end + 1]
+    return json.loads(obj_str)
 
 
 # --- Stage 1: per-figure panel annotations + figure gist ---------------------
@@ -97,7 +177,13 @@ caption 切分如下：
 正文引用句（refs）：
 {refs}
 
-注意：如果某 panel 的 caption 片段为空，仍保留 label 并尽力从图像推断。不要编造图像里没有的内容。"""
+注意：如果某 panel 的 caption 片段为空，仍保留 label 并尽力从图像推断。不要编造图像里没有的内容。
+
+输出要求（重要）：
+- 只输出 JSON 对象本身，不要输出任何思考过程、解释、Markdown 标题
+- 不要使用 ```json 代码围栏
+- JSON 必须可被 json.loads 直接解析；字符串值里的双引号用反斜杠加引号转义
+- 如果你的推理过程需要打草稿，请在 JSON 之外绝不出现；只返回最终 JSON"""
 
 
 def explain_figure(fig: Figure, base_url: str, api_key: str, model: str) -> dict:
@@ -119,12 +205,20 @@ def explain_figure(fig: Figure, base_url: str, api_key: str, model: str) -> dict
             {"type": "image_url", "image_url": {"url": data_url}},
         ]},
     ]
-    raw = _chat(base_url, api_key, model, messages, max_tokens=1800)
+    raw = _chat(base_url, api_key, model, messages, max_tokens=_FIGURE_MAX_TOKENS)
     try:
         return _json_response(raw)
-    except Exception:
-        return {"panels": [], "gist_zh": raw[:400], "logical_role": "",
-                "_raw": raw[:800]}
+    except Exception as e:
+        # 解析失败(多为 max_tokens 截断产生 unbalanced JSON):重试一次,
+        # 明确要求只输出完整 JSON;仍失败才回退占位(附原文便于排查)
+        try:
+            retry_msgs = messages + [{"role": "assistant", "content": raw},
+                                     {"role": "user", "content": "你上次的输出 JSON 不完整(被截断或格式错误)。请重新只输出完整的 JSON 对象,不要任何额外文字。"}]
+            raw2 = _chat(base_url, api_key, model, retry_msgs, max_tokens=_FIGURE_MAX_TOKENS)
+            return _json_response(raw2)
+        except Exception as e2:
+            return {"panels": [], "gist_zh": f"（解析失败: {e} / 重试: {e2}）",
+                    "logical_role": "", "_raw": raw[:1200]}
 
 
 # --- Stage 2+3: compare figure structure vs abstract/intro, locate in text ---
@@ -166,6 +260,11 @@ C) 引言/概述：
 
 D) 正文全文：
 {full_text}
+
+输出要求（重要）：
+- 只输出 JSON 对象本身，不要输出任何思考过程、解释、Markdown 标题
+- 不要使用 json 代码围栏
+- JSON 必须可被 json.loads 直接解析；字符串值里的引号用反斜杠转义
 """
 
 
@@ -192,9 +291,10 @@ def synthesize(figure_explanations: list[dict], abstract: str, intro: str,
         {"role": "user", "content": prompt},
     ]
     raw = _chat(base_url, api_key, model, messages, temperature=0.2,
-                max_tokens=3000, timeout=240)
+                max_tokens=_SYNTH_MAX_TOKENS, timeout=_DEFAULT_TIMEOUT)
     try:
         return _json_response(raw)
-    except Exception:
-        return {"figure_logical_structure": raw[:1000], "differences": [],
-                "key_points": [], "_raw": raw[:1500]}
+    except Exception as e:
+        return {"figure_logical_structure": f"（解析失败: {e}）",
+                "differences": [], "key_points": [],
+                "_raw": raw[:1500]}
