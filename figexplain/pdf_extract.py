@@ -14,8 +14,10 @@ import fitz  # PyMuPDF
 # Build regex without backslash-in-literal (keeps this file JSON-safe to author).
 # Use re character classes / explicit chars only; avoid \s \b \d \w \. escapes.
 _WS = r"[ \t\r\n\f]"            # whitespace
-_WS_P = r"[ \t\r\n\f]*"         # zero-or-more whitespace
-_WS_P1 = r"[ \t\r\n\f]+"        # one-or-more whitespace
+# 含 Unicode 空格(\xa0 不换行空格、 窄空格、 窄不换行空格):PNAS/Nature
+# 系排版广泛使用,缺它们导致 "Fig.\xa01A" 全部漏匹配(实测 PNAS 图=0 根因)
+_WS_P = r"[ \t\r\n\f\xa0  ]*"         # zero-or-more whitespace
+_WS_P1 = r"[ \t\r\n\f\xa0  ]+"        # one-or-more whitespace
 
 # caption head: "Fig. N |" (Nature/Cell style titled caption) -- preferred
 CAPTION_TITLED_RE = re.compile(
@@ -239,37 +241,44 @@ def _re_sub_ws(s: str) -> str:
     return _re.sub(r"\s+", " ", s).strip()
 
 
-def _render_figure_image(page, caption_rect=None, max_dim: int = 1400) -> tuple[bytes, list]:
+def _render_figure_image(page, caption_rect=None, max_dim: int = 1024) -> tuple[bytes, list, str]:
     """Render the figure region of a page to PNG bytes + crop_points.
 
-    Strategy: pick the largest embedded raster image bbox on the page; render
-    a tight clip around it (with a small margin). Falls back to top 70% of the
-    page. JPEG-encoded output keeps the LLM context small.
+    Accepts an explicit `caption_rect` (a fitz.Rect) computed by the caller
+    from caption/page layout (preferred — captures vector-graphic figures with
+    no embedded raster image). When `caption_rect` is given we render exactly
+    that clip. Otherwise we fall back to the largest embedded raster image
+    bbox on the page (original behaviour), then top-70% of the page.
     """
     rect = page.rect
-    try:
-        imgs = page.get_images(full=True)
-    except Exception:
-        imgs = []
     bbox = None
-    if imgs:
-        # collect all image bboxes, pick the largest by area
-        try:
-            all_bboxes = []
-            for im in imgs:
-                for b in page.get_image_rects(im[0]):
-                    all_bboxes.append(b)
-        except Exception:
-            all_bboxes = []
-        best = None
-        for b in all_bboxes:
-            area = (b.x1 - b.x0) * (b.y1 - b.y0)
-            if best is None or area > best[0]:
-                best = (area, b)
-        if best and best[0] > (rect.width * rect.height * 0.05):
-            bbox = best[1]
+    if caption_rect is not None:
+        # honour caller-provided region; clamp to page
+        bbox = fitz.Rect(
+            max(rect.x0, caption_rect.x0), max(rect.y0, caption_rect.y0),
+            min(rect.x1, caption_rect.x1), min(rect.y1, caption_rect.y1))
     if bbox is None:
-        bbox = fitz.Rect(rect.x0 + 10, rect.y0 + 10, rect.x1 - 10, rect.y0 + rect.height * 0.7)
+        try:
+            imgs = page.get_images(full=True)
+        except Exception:
+            imgs = []
+        if imgs:
+            try:
+                all_bboxes = []
+                for im in imgs:
+                    for b in page.get_image_rects(im[0]):
+                        all_bboxes.append(b)
+            except Exception:
+                all_bboxes = []
+            best = None
+            for b in all_bboxes:
+                area = (b.x1 - b.x0) * (b.y1 - b.y0)
+                if best is None or area > best[0]:
+                    best = (area, b)
+            if best and best[0] > (rect.width * rect.height * 0.05):
+                bbox = best[1]
+        if bbox is None:
+            bbox = fitz.Rect(rect.x0 + 10, rect.y0 + 10, rect.x1 - 10, rect.y0 + rect.height * 0.7)
     # small margin around the bbox so we don't crop panel labels
     margin = 6
     bbox = fitz.Rect(max(rect.x0, bbox.x0 - margin), max(rect.y0, bbox.y0 - margin),
@@ -287,6 +296,112 @@ def _render_figure_image(page, caption_rect=None, max_dim: int = 1400) -> tuple[
         out = pix.tobytes("png")
         fmt = "png"
     return out, crop_points, fmt
+
+
+def _find_caption_page_and_y(page_texts: list[str], doc, fig_index: int) -> tuple[int, float]:
+    """Find the page index and caption-head y0 for figure fig_index.
+
+    Caption head = first 'Fig N |' occurrence (Nature titled style) or 'Fig N'
+    (loose). Returns (page_index, caption_y0) or (-1, 0).
+    """
+    cap_re = CAPTION_TITLED_RE if False else re.compile(
+        r"Fig[.]?\s*" + str(fig_index) + r"\s*[|]", re.IGNORECASE)
+    for pi, pt in enumerate(page_texts):
+        m = cap_re.search(pt)
+        if m:
+            # caption y0 via blocks
+            cy = None
+            try:
+                for b in doc[pi].get_text("blocks"):
+                    if m.group(0) in b[4]:
+                        cy = b[1]; break
+            except Exception:
+                pass
+            return pi, (cy if cy is not None else 49.0)
+    # fallback loose
+    loose = re.compile(r"Fig[.]?\s*" + str(fig_index), re.IGNORECASE)
+    for pi, pt in enumerate(page_texts):
+        m = loose.search(pt)
+        if m:
+            cy = None
+            try:
+                for b in doc[pi].get_text("blocks"):
+                    if m.group(0) in b[4]:
+                        cy = b[1]; break
+            except Exception:
+                pass
+            return pi, (cy if cy is not None else 49.0)
+    return -1, 0.0
+
+
+def _figure_region(doc, cap_page: int, cap_y0: float) -> tuple[fitz.Rect, int]:
+    """Return (clip_rect, src_page_index) for a figure.
+
+    Nature-style two-column layout: a figure occupies the bottom of the page
+    that PRECEDES its caption (when the caption sits at the top of the next
+    page), or the top of the SAME page above the caption.
+
+    We render the union of ALL content blocks AND embedded raster image rects
+    above the caption (same page) or the whole content area of the previous
+    page. Unioning image rects too is important: some figures (e.g. Fig 4
+    here) are mostly one big raster whose bbox extends lower than the panel
+    text labels, so text-block-only union would clip the figure's bottom.
+    """
+    pr = doc[cap_page].rect
+    TOP = pr.y0 + 10
+    BOT = pr.y1 - 10
+    if cap_y0 < 200:
+        # caption at top -> figure on previous page (full content area)
+        src = cap_page - 1
+        if 0 <= src < len(doc):
+            blocks = [b for b in doc[src].get_text("blocks")
+                      if b[6] == 0 and b[4].strip()]
+            rects = _image_rects_on(doc[src])
+            xs, ys = [], []
+            for b in blocks:
+                xs += [b[0], b[2]]; ys += [b[1], b[3]]
+            for r in rects:
+                xs += [r.x0, r.x1]; ys += [r.y0, r.y1]
+            if xs:
+                x0 = max(pr.x0 + 10, min(xs))
+                y0 = max(TOP, min(ys))
+                x1 = min(pr.x1 - 10, max(xs))
+                y1 = min(BOT, max(ys))
+                return fitz.Rect(x0, y0, x1, y1), src
+        return fitz.Rect(pr.x0 + 10, TOP, pr.x1 - 10, BOT), cap_page
+    # caption lower on page -> figure region = content above caption
+    blocks = [b for b in doc[cap_page].get_text("blocks")
+              if b[6] == 0 and b[4].strip() and b[3] <= cap_y0 + 5]
+    rects = [r for r in _image_rects_on(doc[cap_page]) if r.y1 <= cap_y0 + 5]
+    xs, ys = [], []
+    for b in blocks:
+        xs += [b[0], b[2]]; ys += [b[1], b[3]]
+    for r in rects:
+        xs += [r.x0, r.x1]; ys += [r.y0, r.y1]
+    if xs:
+        x0 = max(pr.x0 + 10, min(xs))
+        y0 = max(TOP, min(ys))
+        x1 = min(pr.x1 - 10, max(xs))
+        y1 = min(cap_y0, max(ys))  # never extend into caption
+        return fitz.Rect(x0, y0, x1, y1), cap_page
+    # fallback
+    return fitz.Rect(pr.x0 + 10, TOP, pr.x1 - 10, cap_y0), cap_page
+
+
+def _image_rects_on(page) -> list:
+    """All embedded raster image rects on a page (any size)."""
+    out = []
+    try:
+        imgs = page.get_images(full=True)
+    except Exception:
+        return out
+    for im in imgs:
+        try:
+            for r in page.get_image_rects(im[0]):
+                out.append(r)
+        except Exception:
+            pass
+    return out
 
 
 def extract_figures(pdf_path: str, max_figures: int = 12) -> List[Figure]:
@@ -319,16 +434,18 @@ def extract_figures(pdf_path: str, max_figures: int = 12) -> List[Figure]:
             continue
         panels = _split_panels(caption)
         refs = _collect_refs(full_text, n)
-        # find the page where this figure's caption appears (for image render)
-        page_index = 0
-        page_label = "1"
-        for i, pt in enumerate(page_texts):
-            if caption[:40] in pt:
-                page_index = i
-                page_label = str(doc[i].get_label() or (i + 1))
-                break
+        # find the page where this figure's caption head appears, then the
+        # figure region (may be on the previous page)
+        cap_page, cap_y0 = _find_caption_page_and_y(page_texts, doc, n)
+        if cap_page < 0:
+            page_index = 0
+            page_label = "1"
+            rect = None
+        else:
+            rect, page_index = _figure_region(doc, cap_page, cap_y0)
+            page_label = str(doc[page_index].get_label() or (page_index + 1))
         try:
-            img_bytes, crop, fmt = _render_figure_image(doc[page_index])
+            img_bytes, crop, fmt = _render_figure_image(doc[page_index], rect)
             img_b64 = base64.b64encode(img_bytes).decode("ascii")
             mime = "image/jpeg" if fmt == "jpeg" else "image/png"
         except Exception:
@@ -417,11 +534,24 @@ def abstract_and_intro(full_text: str) -> tuple[str, str]:
                 break
         abstract = _re_sub_ws(" ".join(abst_lines))[:3000] if abst_lines else ""
 
-    # Introduction
-    m = _re.search(r"(?is)\n\s*introduction\b", full_text)
+    # Introduction(标题可带章节编号,如 FASEB 的 "1 | Introduction")
+    m = _re.search(r"(?is)\n\s*\d*\s*\|?\s*introduction\b", full_text)
     if m:
         rest = full_text[m.end():]
-        m2 = _re.search(r"(?is)\n\s*(results|methods|materials|discussion)", rest)
+        m2 = _re.search(r"(?is)\n\s*\d*\s*\|?\s*(results|methods|materials|discussion)", rest)
         intro = rest[:m2.start()] if m2 else rest[:4000]
         intro = _re_sub_ws(intro)[:4000]
+    else:
+        # 无 "Introduction" 标题的期刊(如 Nature Metabolism,引言紧跟摘要):
+        # 取「摘要尾部 → 第一个 Results/Methods 标题」之间的正文。
+        # 在折叠空白后的全文上定位,保证与 abstract 同一坐标系。
+        norm = _re_sub_ws(full_text)
+        rm = _re.search(r"(?is)\b(results|methods)\b", norm)
+        if rm:
+            seg_start = 0
+            if abstract:
+                tail = _re_sub_ws(abstract)[-80:]
+                p = norm.find(tail)
+                seg_start = (p + len(tail)) if p >= 0 else 0
+            intro = norm[seg_start:rm.start()][:4000]
     return abstract, intro
