@@ -1,0 +1,282 @@
+{
+  "input_key": "4IX5ZWDT",
+  "status": "done",
+  "steps": [
+    "文献:Delineating mouse β-cell identity during lifetime and in dia | Nature Metabolism | 2023-09",
+    "PDF:Hrovatin 等 - 2023 - Delineating mouse β-cell identity during lifetime ",
+    "[1/4] 图 10 张 | 摘要 1522 字 | 引言 4000 字 | 正文 60000 字",
+    "[2/4] 逐图解读…",
+    "  Fig 1: OK (4 panels) 22s",
+    "  Fig 2: OK (6 panels) 36s",
+    "  Fig 3: OK (3 panels) 18s",
+    "  Fig 4: OK (5 panels) 47s",
+    "  Fig 5: OK (7 panels) 20s",
+    "  Fig 6: OK (7 panels) 36s",
+    "  Fig 7: OK (2 panels) 18s",
+    "  Fig 8: OK (7 panels) 24s",
+    "  Fig 9: OK (5 panels) 26s",
+    "  Fig 10: OK (0 panels) 371s",
+    "[3/4] 综合分析…",
+    "  差异 13 条 | 要点 10 条",
+    "完成 652s"
+  ],
+  "article": {
+    "key": "4457SZY4",
+    "title": "Delineating mouse β-cell identity during lifetime and in diabetes with a single cell atlas",
+    "date": "2023-09",
+    "authors": "Hrovatin, Bastidas-Ponce, Bakhti",
+    "doi": "10.1038/s42255-023-00876-x",
+    "journal": "Nature Metabolism"
+  },
+  "figures_count": 10,
+  "abstract_chars": 1522,
+  "intro_chars": 4000,
+  "figures_done": 10,
+  "figures": [
+    {
+      "index": 1,
+      "ok": true,
+      "panels": 4,
+      "gist": "本图系统展示了MIA方法如何整合多源scRNA-seq数据，在跨条件、跨物种和跨模型层面揭示β细胞异质性与功能状态演变规律，并提供超越单个数据集的全新分析能力与",
+      "crop": [
+        33.7,
+        14.3,
+        567.3,
+        493.9
+      ]
+    },
+    {
+      "index": 2,
+      "ok": true,
+      "panels": 6,
+      "gist": "本图核心结论一句话：通过多组学整合与严格质量控制，构建了一个覆盖生命全程、性别差异及多种糖尿病/应激状态的高分辨率人类胰岛细胞图谱，实现了跨数据集细胞类型的一致",
+      "crop": [
+        33.7,
+        14.3,
+        567.3,
+        428.7
+      ]
+    },
+    {
+      "index": 3,
+      "ok": true,
+      "panels": 3,
+      "gist": "本图核心结论一句话：胚胎期δ细胞存在功能异质性，其中P样亚群已启动向成熟δ细胞分化的分子程序，并可映射至成体δ细胞簇。",
+      "crop": [
+        33.7,
+        14.3,
+        567.3,
+        442.4
+      ]
+    },
+    {
+      "index": 4,
+      "ok": true,
+      "panels": 5,
+      "gist": "本图综合展示了多种糖尿病模型中胰岛细胞的转录异质性、功能基因表达变化及关键通路失调，揭示了不同病因导致的β细胞功能障碍存在共同的分子特征。",
+      "crop": [
+        32.7,
+        14.3,
+        567.3,
+        453.3
+      ]
+    },
+    {
+      "index": 5,
+      "ok": true,
+      "panels": 7,
+      "gist": "本图核心结论一句话：MIA方法能系统性地刻画β细胞在跨样本和样本内层面的多层次异质性，从粗粒度到细粒度状态均能识别出具有明确功能特征（如成熟度、去分化、免疫敏感",
+      "crop": [
+        32.6,
+        14.3,
+        567.3,
+        505.1
+      ]
+    },
+    {
+      "index": 6,
+      "ok": true,
+      "panels": 7,
+      "gist": "本图系统揭示了β细胞在糖尿病进程中存在既具模型特异性又具共性特征的分子轨迹，其动态演化路径可被精细划分，并与年龄、性别及蛋白水平证据相互印证，支持糖尿病功能障碍",
+      "crop": [
+        33.2,
+        14.3,
+        567.3,
+        473.1
+      ]
+    },
+    {
+      "index": 7,
+      "ok": true,
+      "panels": 2,
+      "gist": "本图核心结论一句话：通过将外部小鼠β细胞数据映射到参考图谱，验证了该图谱能可靠地识别和分类不同生理/病理条件下β细胞的细胞状态，证实其跨样本泛化能力。",
+      "crop": [
+        33.7,
+        14.3,
+        567.3,
+        237.5
+      ]
+    },
+    {
+      "index": 8,
+      "ok": true,
+      "panels": 7,
+      "gist": "本图核心结论一句话：基因程序（GPs）的活性在精细β细胞状态间具有高度特异性和可区分性，且其整体方差解释能力显著优于随机基因集，支持GPs作为解析β细胞功能状态",
+      "crop": [
+        33.7,
+        14.3,
+        567.3,
+        626.4
+      ]
+    },
+    {
+      "index": 9,
+      "ok": true,
+      "panels": 5,
+      "gist": "本图核心结论一句话：健康胰岛β细胞中存在五个稳定、可区分且具空间特异性的基因活性组，其分布模式在多源健康样本中一致，为β细胞异质性提供了分子分型依据。",
+      "crop": [
+        33.7,
+        14.3,
+        567.3,
+        590.0
+      ]
+    },
+    {
+      "index": 10,
+      "ok": true,
+      "panels": 0,
+      "gist": "（解析失败: unbalanced JSON in response: '{\\n  \"panels\": [\\n    {\\n      \"label\": \"a\"",
+      "crop": [
+        33.7,
+        14.3,
+        567.3,
+        680.9
+      ]
+    }
+  ],
+  "diff_count": 13,
+  "key_point_count": 10,
+  "synthesis": {
+    "figure_logical_structure": "图1：建立MIA资源框架，展示其涵盖多条件scRNA-seq数据、能提供超越单个数据集的新见解，并作为交互探索和计算查询的资源。\n图2：通过整合9个数据集超过30万细胞，构建覆盖胚胎到老年、不同性别及多种糖尿病/应激状态的高分辨率小鼠胰岛细胞图谱，完成跨数据集的一致细胞类型注释，并识别出前人未注释的细胞群（如Schwann细胞、激活/静息星状细胞）。\n图3：揭示胚胎期δ细胞存在功能异质性，其中E P-like亚群已启动向成熟δ细胞分化的分子程序，并可与成体δ细胞簇映射；同时鉴定出胚胎期与出生后内分泌细胞标记物仅部分重叠。\n图4：综合展示多种糖尿病模型（NOD、db/db、mSTZ）中β细胞的转录组异质性、已知功能基因表达变化及关键通路失调，证明mSTZ与db/db模型转录组相似，且mSTZ更接近人类T2D而非T1D。\n图5：系统刻画β细胞跨样本和样本内的多层次异质性：先定义粗粒度状态（基于元数据），再通过基因程序（GPs）定义19个精细状态，并验证已知标记物在精细状态中的分离与共性，揭示健康样本内也存在保守的基因共表达组。\n图6：揭示β细胞在糖尿病进程中存在模型特异性和共性特征：DGE聚类区分NOD和db/db+mSTZ各自独有的失调通路，同时发现两者共享的部分下调基因（如CREB靶基因），并指出糖尿病变化涉及去分化与模型特异性反应。\n图7：通过将外部Feng小鼠β细胞数据集映射到MIA参考图谱，验证了图谱能可靠识别不同生理/病理状态的β细胞，证实其跨样本泛化能力。\n图8：验证基因程序（GPs）在精细β细胞状态间具有高度特异性和可区分性，且整体方差解释能力显著优于随机基因集，支持GPs作为解析β细胞状态的关键分子模块。\n图9：在健康胰岛β细胞中识别出五个稳定、保守且具空间特异性的基因活性组，其分布模式在多源健康样本中一致，并与成熟度、衰老和应激恢复等生物学过程相关。\n图10：具体解析失败，但结合正文推测其展示了糖尿病模型中β细胞DEG聚类结果（如T1/T2组）随β细胞状态和发育轨迹的动态表达模式，可能包含轨迹分析与蛋白水平验证。",
+    "differences": [
+      {
+        "type": "omission",
+        "figure": "图2",
+        "point_zh": "图表中明确显示MIA识别出Schwann细胞、激活/静息星状细胞等以往在单个数据集中未注释的细胞类型，但摘要和引言未提及这一新发现。",
+        "evidence_quote_en": "For example, we found that Schwann cells (617 out of 301,796 atlas cells) were present across the studies, although they were not annotated in any individual dataset. Similarly, none of the original annotations distinguished between activated and quiescent stellate cells and some of the studies did not annotate stellate cells at all.",
+        "evidence_zh": "例如，我们发现Schwann细胞（在301,796个图谱细胞中有617个）存在于各项研究中，尽管在任何单个数据集中都未被注释。类似地，原始注释均未区分激活型和静息型星状细胞，有些研究甚至完全没有注释星状细胞。",
+        "location_hint": "Results: An integrated atlas of mouse pancreatic islet cells across conditions"
+      },
+      {
+        "type": "omission",
+        "figure": "图3",
+        "point_zh": "图3显示胚胎期与出生后内分泌细胞标记物仅部分重叠，并鉴定出多个新的细胞类型特异性标记物（如Wnk3、Nxph1等），摘要未提及这些标记物差异。",
+        "evidence_quote_en": "The identified embryonic and postnatal markers only partially overlapped (Extended Data Fig. 3a), confirming that distinct marker sets are needed at different developmental stages.",
+        "evidence_zh": "鉴定的胚胎期和出生后标记物仅部分重叠，证实不同发育阶段需要不同的标记物集合。",
+        "location_hint": "Results: Embryonic and postnatal endocrine cell type markers partially overlap"
+      },
+      {
+        "type": "omission",
+        "figure": "图3",
+        "point_zh": "图3揭示胚胎期δ细胞中存在E P-like亚群并与成体δ细胞簇重叠，这一新的发育生物学发现未在摘要中突出说明，仅引言笼统提及需要理解β细胞成熟。",
+        "evidence_quote_en": "notably we observed that a large proportion of embryonic δ-cells mapped to the postnatal δ-cell cluster (termed E P-like group; Fig. 3b and Extended Data Figs. 1d and 3d).",
+        "evidence_zh": "值得注意的是，我们观察到大部分胚胎δ细胞映射到出生后δ细胞簇（称为E P-like组）。",
+        "location_hint": "Results: Embryonic δ-cells cluster with postnatal δ-cells"
+      },
+      {
+        "type": "omission",
+        "figure": "图4",
+        "point_zh": "图4c展示将外部Feng数据集映射到MIA后，STZ处理的细胞定位到mSTZ和db/db区域，验证了模型间相似性，摘要只简单提到STZ与T2D模型相似，未提外部数据验证。",
+        "evidence_quote_en": "To further validate the similarity between the mSTZ and db/db models, we mapped onto MIA another mouse dataset (referred to as the Feng dataset31, not part of MIA), containing samples treated with STZ (single high dose). Again, the healthy control cells from the Feng study mapped onto the healthy β-cell region of MIA and STZ-treated cells mapped onto the region with mSTZ and db/db model samples (Fig. 4c).",
+        "evidence_zh": "为了进一步验证mSTZ和db/db模型之间的相似性，我们将另一个小鼠数据集（称为Feng数据集，不属于MIA）映射到MIA，该数据集包含STZ处理的样本。同样，Feng研究的健康对照细胞映射到MIA的健康β细胞区域，STZ处理的细胞映射到mSTZ和db/db模型样本所在的区域。",
+        "location_hint": "Results: Transcriptomic similarity of db/db and STZ diabetes model β-cells"
+      },
+      {
+        "type": "omission",
+        "figure": "图5",
+        "point_zh": "图5通过GP定义19个精细β细胞状态，并发现mSTZ模型中存在两个不同亚群（更不成熟和更应激），这一重要细分未在摘要中具体提及。",
+        "evidence_quote_en": "We observed two populations of β-cells in the mSTZ model (states mSTZ and db/db+mSTZ; Fig. 5e and Extended Data Fig. 5d).",
+        "evidence_zh": "我们在mSTZ模型中观察到两个β细胞亚群（mSTZ状态和db/db+mSTZ状态）。",
+        "location_hint": "Results: β-cell heterogeneity within biological conditions"
+      },
+      {
+        "type": "omission",
+        "figure": "图5",
+        "point_zh": "图5f显示已知β细胞异质性标记物（如成熟、去分化、免疫攻击易感等）在精细状态中分离成多个表达模式不同的组，提示文献中标记物可能不特异，摘要未提及。",
+        "evidence_quote_en": "Some markers previously reported as marking the same β-cell population, such as markers of maturity or dedifferentiation (often related to T2D models), separated into multiple groups with distinct expression patterns across fine states (Fig. 5f).",
+        "evidence_zh": "一些先前报道标记同一β细胞群体的标记物，例如成熟或去分化标记物（通常与T2D模型相关），在精细状态中分离成多个具有不同表达模式的组。",
+        "location_hint": "Results: β-cell heterogeneity within biological conditions"
+      },
+      {
+        "type": "omission",
+        "figure": "图5",
+        "point_zh": "图5g发现健康成年β细胞中保守的基因共表达组（如InsL、InsH等），其中group1涉及代谢应激恢复并与T2D治疗相关，摘要未提到此健康状态异质性。",
+        "evidence_quote_en": "Group 1 contained genes implicated in β-cell metabolic stress recovery, such as ATP production-related genes82 (Fig. 5g and Supplementary Table 8). The negative correlation between the expression of group 1 and groups 3 and 5 (Extended Data Fig. 9) is in accordance with previously reported cycling of β-cells between insulin production and recovery in mice and humans82,87,88.",
+        "evidence_zh": "第1组包含参与β细胞代谢应激恢复的基因，例如ATP产生相关基因。第1组与第3、5组表达的负相关与先前报道的小鼠和人类β细胞在胰岛素产生和恢复之间循环一致。",
+        "location_hint": "Results: β-cell dysfunction patterns within healthy samples"
+      },
+      {
+        "type": "omission",
+        "figure": "图6",
+        "point_zh": "图6展示DGE聚类后NOD模型和db/db+mSTZ模型之间共享或相反的基因表达变化（如T1-up1与T2D重叠、CREB靶基因下调等），摘要只概括为pathways shared，未提及具体共享基因模块。",
+        "evidence_quote_en": "NOD group T1-up1 also showed high expression in cell states from db/db and mSTZ datasets (Fig. 6a) and partially overlapped with db/db+mSTZ upregulated genes (Extended Data Fig. 10d), with the overlap containing multiple genes previously associated with diabetes (Gc, Fabp5, Spp1 and Vgf)104–107.",
+        "evidence_zh": "NOD组的T1-up1在db/db和mSTZ数据集的细胞状态中也显示高表达，并与db/db+mSTZ上调基因部分重叠，重叠中包含多个先前与糖尿病相关的基因（Gc、Fabp5、Spp1和Vgf）。",
+        "location_hint": "Results: Diabetes-unique and cross-condition dysfunction in β-cells"
+      },
+      {
+        "type": "omission",
+        "figure": "图6",
+        "point_zh": "图6/正文指出NOD模型中DGE分析受年龄混杂影响，聚类方法可分离年龄效应和真实糖尿病信号，摘要未提及方法学贡献。",
+        "evidence_quote_en": "In the original NOD dataset paper by Thompson et al.27 the authors observed confounding of dysfunction progression and age differences between samples containing healthy (8 weeks) and dysfunctional cells (14 and 16 weeks), impairing the interpretation of diabetes-associated changes. Indeed, we also observed, among NOD downregulated genes, one group (T1-down1), which was highly expressed across multiple immature states (Fig. 6a) and contained genes associated with immaturity (Pyy and Npy)99,100 thus likely representing a confounding effect of age.",
+        "evidence_zh": "在Thompson等人的原始NOD数据集中，作者观察到功能障碍进展与样本间年龄差异（健康8周 vs 功能障碍14和16周）存在混杂，影响糖尿病相关变化的解读。确实，我们在NOD下调基因中也观察到一个组（T1-down1），它在多个未成熟状态中高表达，并包含与未成熟相关的基因（Pyy和Npy），因此很可能代表年龄的混杂效应。",
+        "location_hint": "Results: Diabetes-unique and cross-condition dysfunction in β-cells"
+      },
+      {
+        "type": "overview_only",
+        "figure": "图1",
+        "point_zh": "摘要提到MIA包含抗糖尿病治疗（如VSG、胰岛素等）但未指定具体药物，图表图2a明确展示了GLP-1、雌激素、VSG等治疗条件。摘要未详细说明图谱中包括5wNOD和8-16wNOD等早期T1D阶段样本。",
+        "evidence_quote_en": "The samples within MIA vary in sex, age (ranging from embryonic to postnatal, to adult, to aged), application of chemical stressors implicated in the loss of cellular identity (FoxO inhibitor and artemether) and disease status (diabetes models, NOD, db/db and multiple low-dose STZ (mSTZ) together with different anti-diabetic treatments (vertical sleeve gastrectomy (VSG), insulin, glucagon-like peptide 1 (GLP-1) and estrogen) (Fig. 2a).",
+        "evidence_zh": "MIA中的样本在性别、年龄（从胚胎到出生后、成年、老年）、与细胞身份丧失有关的化学应激物（FoxO抑制剂和青蒿素）以及疾病状态（糖尿病模型NOD、db/db和多低剂量STZ，以及不同的抗糖尿病治疗如垂直袖状胃切除术、胰岛素、GLP-1和雌激素）方面均有变化。",
+        "location_hint": "Results: An integrated atlas of mouse pancreatic islet cells across conditions"
+      },
+      {
+        "type": "overview_only",
+        "figure": "图4",
+        "point_zh": "摘要声明“β-cells in the streptozotocin model transcriptionally correlate with those in human type 2 diabetes and mouse db/db models”，但图4e是基于基因集活性分析（T2D相关基因集），没有展示直接相关系数或人类数据的直接共嵌入图。该结论主要来自基因集富集，而非直接转录组相关计算。",
+        "evidence_quote_en": "Human T2D is associated with changes in hormone metabolism and stress related to metabolic compensation21,22,78, which were upregulated in db/db and mSTZ but not in the NOD model. Thus, the mSTZ model reflects key molecular changes of human T2D, but not T1D.",
+        "evidence_zh": "人类T2D与激素代谢和与代谢补偿相关的应激变化有关，这些变化在db/db和mSTZ中上调，但在NOD模型中没有。因此，mSTZ模型反映了人类T2D的关键分子变化，而非T1D。",
+        "location_hint": "Results: Transcriptomic similarity of db/db and STZ diabetes model β-cells"
+      },
+      {
+        "type": "overview_only",
+        "figure": "图4",
+        "point_zh": "引言提到“The function also differs between sexes, with male β-cells having transcriptomic signatures more akin to T2D”，但图4或图5等并未直接展示性别差异导致β细胞更接近T2D的证据；该结论来自文献引用，而非图表直接支撑。",
+        "evidence_quote_en": "The function also differs between sexes, with male β-cells having transcriptomic signatures more akin to T2D18.",
+        "evidence_zh": "功能也存在性别差异，雄性β细胞的转录组特征更接近T2D。",
+        "location_hint": "Introduction (paragraph about sex differences)"
+      },
+      {
+        "type": "overview_only",
+        "figure": "图1",
+        "point_zh": "摘要称MIA是“curated resource for interactive exploration and computational querying”，但图1d虽展示了用例，文中并未展示实际交互界面或查询示例；该功能陈述主要由资源可访问性支持。",
+        "evidence_quote_en": "To empower future studies we also made MIA available for both interactive and computational analyses (Fig. 1d; https://github.com/theislab/mouse_cross-condition_pancreatic_islet_atlas).",
+        "evidence_zh": "为了支持未来的研究，我们还提供了MIA用于交互和计算分析。",
+        "location_hint": "Introduction (last sentence of intro)"
+      }
+    ],
+    "key_points": [
+      "构建了首个跨越发育、衰老、性别及多种糖尿病模型的小鼠胰岛细胞整合图谱（MIA），包含301,796个细胞、9个数据集、56个样本。",
+      "通过系统评估整合方法，实现了批次校正与生物学变异保持的平衡，并完成跨数据集一致的细胞类型重注释，发现Schwann细胞和星状细胞亚型等以往缺失注释。",
+      "胚胎期与出生后内分泌细胞标记物仅部分重叠，需分阶段使用特异性标记；鉴定出多个新标记（如Wnk3、Nxph1、Spock2等）。",
+      "胚胎期大部分δ细胞可映射到出生后δ细胞簇，称为E P-like，提示δ细胞在胚胎期已具备部分成熟分化程序。",
+      "mSTZ与db/db模型β细胞转录组高度相似，均富集代谢应激和T2D相关通路；mSTZ更接近人类T2D而非T1D，而NOD模型富集免疫相关基因集。",
+      "β细胞异质性分多个层级：基于元数据的粗状态和基于基因程序（GPs）的19个精细状态；mSTZ模型中存在两个功能不同的亚群（未成熟型和应激型）。",
+      "文献中已知的β细胞标记（如成熟、去分化标记）在精细状态下分离为不同表达模式，说明这些标记并非单一状态特异，MIA可用于基因语境化。",
+      "健康成年β细胞内也存在保守的异质性：五个基因共表达组与胰岛素产生、成熟、衰老和应激恢复相关，其中应激恢复组在糖尿病模型中活性最低。",
+      "糖尿病β细胞失调包含模型特异性和共性机制：NOD与db/db+mSTZ共享部分下调基因（如CREB靶基因），同时存在各自独有的免疫或代谢通路；糖尿病变化涉及去分化及模型特异性反应。",
+      "通过外部数据集映射和DEG验证，证明MIA具有很强的跨数据集泛化能力，并能解释某些基因在不同数据集间不可重复的原因（如状态组成差异）。"
+    ]
+  },
+  "html": "C:\\Users\\29346\\Desktop\\figexplain-tool\\validation\\4457SZY4.html",
+  "elapsed_s": 652
+}
