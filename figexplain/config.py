@@ -11,6 +11,15 @@ DEFAULT_CONFIG = {
     "openai_base_url": "https://api.openai.com",
     "openai_api_key": "",
     "openai_model": "gpt-4o",
+    # 分阶段模型(2026-08-01 成本优化):视觉解读贵,纯文本综合分析便宜。
+    # explain_* 用于逐图视觉解读;synthesize_* 用于综合分析(纯文本,
+    # 可换 DeepSeek flash 直连,省 ~98%)。留空则回退 openai_* 配置。
+    "explain_base_url": "",
+    "explain_api_key": "",
+    "explain_model": "",
+    "synthesize_base_url": "",
+    "synthesize_api_key": "",
+    "synthesize_model": "",
     # Default Zotero storage location resolved at runtime from the user's home
     # dir, so no machine-specific path is baked into the source.
     "zotero_storage_dir": str(Path.home() / "Zotero" / "storage"),
