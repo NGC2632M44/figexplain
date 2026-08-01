@@ -1,0 +1,93 @@
+{
+  "input_key": "YDS4VMSL",
+  "status": "done",
+  "steps": [
+    "文献:(Zotero 未连接) |  | ",
+    "PDF:Gonzalez-Rellan和Drucker - 2025 - The expanding benefits of GLP-1 medic",
+    "[1/4] 图 1 张 | 摘要 1535 字 | 引言 1122 字 | 正文 26871 字",
+    "[2/4] 逐图解读…",
+    "  Fig 1: OK (1 panels) 16s",
+    "[3/4] 综合分析…",
+    "  差异 4 条 | 要点 10 条",
+    "完成 57s"
+  ],
+  "article": {
+    "key": "YDS4VMSL",
+    "title": "(Zotero 未连接)",
+    "date": "",
+    "authors": "",
+    "doi": "",
+    "journal": ""
+  },
+  "figures_count": 1,
+  "abstract_chars": 1535,
+  "intro_chars": 1122,
+  "figures_done": 1,
+  "figures": [
+    {
+      "index": 1,
+      "ok": true,
+      "panels": 1,
+      "gist": "本图核心结论一句话：GLP-1药物除降糖减重外，还能显著改善包括心血管疾病、慢性肾脏病、代谢相关脂肪性肝病、睡眠呼吸暂停及骨关节炎在内的多种共病结局。",
+      "crop": [
+        4.0,
+        4.0,
+        599.0,
+        554.1
+      ]
+    }
+  ],
+  "diff_count": 4,
+  "key_point_count": 10,
+  "synthesis": {
+    "figure_logical_structure": "图1由两个子图组成。图1A（临床适应症）总结GLP-1药物在3期随机对照试验中已证实的治疗获益，覆盖心血管疾病（CVD）、慢性肾脏病（CKD）、代谢相关脂肪性肝炎（MASH）、骨关节炎（OA）、阻塞性睡眠呼吸暂停（OSA）和外周动脉疾病（PAD）。图1B（作用机制）展示其发挥保护作用的直接与间接途径：通过大脑介导的器官间通讯抑制炎症、直接激活多个器官中的GLP-1受体、以及降低血糖和体重。整体逻辑为：先呈现临床证据（A），再解释潜在机制（B），并提示这些获益可能部分独立于体重减轻，但具体分子机制仍需进一步研究。",
+    "differences": [
+      {
+        "type": "omission",
+        "figure": "Fig. 1B",
+        "point_zh": "图1B明确列出“通过大脑的器官间通讯（inter-organ communication via the brain）”这一机制，但摘要和引言仅概括为抗炎和代谢通路，未具体提及中枢神经系统介导的通讯途径。",
+        "evidence_quote_en": "as well as through inter-organ communication to dampen inflammation via activation of GLP-1R in subsets of central nervous system neurons",
+        "evidence_zh": "以及通过激活中枢神经系统神经元亚群上的GLP-1R进行器官间通讯来抑制炎症",
+        "location_hint": "Biological pathways affected by GLP-1 medicines"
+      },
+      {
+        "type": "omission",
+        "figure": "Fig. 1B",
+        "point_zh": "图1B展示“直接激活多个器官内的GLP-1受体”，但摘要/引言未具体说明直接作用的细胞靶点（如关节、心脏、肾脏、肝脏和免疫细胞）。",
+        "evidence_quote_en": "These include direct effects on GLP-1R+ cells within joints, the heart, kidney, liver, and immune cells",
+        "evidence_zh": "这些包括对关节、心脏、肾脏、肝脏和免疫细胞中GLP-1R阳性细胞的直接作用",
+        "location_hint": "Biological pathways affected by GLP-1 medicines"
+      },
+      {
+        "type": "overview_only",
+        "figure": "Fig. 1",
+        "point_zh": "摘要强调“部分获益独立于体重减轻程度”，但图1仅将体重下降列为机制之一，未体现该独立性。",
+        "evidence_quote_en": "Notably, these effects were independent of the extent of weight loss.",
+        "evidence_zh": "值得注意的是，这些效应独立于体重减轻的程度。",
+        "location_hint": "Cardiovascular disease and CKD（SELECT试验描述）"
+      },
+      {
+        "type": "overview_only",
+        "figure": "Fig. 1A",
+        "point_zh": "摘要声称GLP-1药物降低慢性肾病、心肌梗死、卒中和心血管死亡的“发生率”，但图1A仅列出疾病类别，未展示具体临床终点或相对风险降低数值。",
+        "evidence_quote_en": "Subcutaneous semaglutide 2.4 mg weekly reduced the primary composite outcome of non-fatal myocardial infarction, non-fatal stroke, or death from cardiovascular causes (6.5% vs. 8%, semaglutide vs. placebo, respectively, HR 0.8; CI 95%; 0.72–0.90; p < 0.001)",
+        "evidence_zh": "每周一次皮下注射司美格鲁肽2.4mg降低了非致死性心肌梗死、非致死性卒中或心血管原因死亡的复合主要终点（司美格鲁肽组6.5%对安慰剂组8%，HR 0.8；95%CI 0.72–0.90；p<0.001）",
+        "location_hint": "Cardiovascular disease and CKD（SELECT试验）"
+      }
+    ],
+    "key_points": [
+      "GLP-1药物最初用于降糖减重，现已证实对心血管疾病、慢性肾脏病、代谢相关脂肪性肝炎、骨关节炎、阻塞性睡眠呼吸暂停和外周动脉疾病等多种共病具有改善作用。",
+      "SELECT试验显示，司美格鲁肽2.4mg每周一次在无T2D的肥胖/超重心血管疾病患者中降低主要不良心血管事件20%，且该获益独立于体重减轻程度。",
+      "FLOW试验显示，司美格鲁肽1mg每周一次在T2D合并CKD患者中降低肾脏复合终点24%，据此FDA扩大其适应症以降低肾脏疾病进展和心血管死亡风险。",
+      "SOUL试验显示，口服司美格鲁肽在T2D伴心血管风险或CKD患者中降低MACE 14%，且与SGLT2抑制剂联用时仍一致获益。",
+      "在HFpEF合并肥胖患者中，司美格鲁肽和替西帕肽均改善症状、运动功能并减少心衰相关事件。",
+      "在代谢相关脂肪性肝炎（MASH）中，司美格鲁肽、survodutide和替西帕肽均能改善肝脏组织学，包括脂肪性肝炎消退和纤维化改善。",
+      "STEP 9试验显示，司美格鲁肽显著改善肥胖合并膝关节骨关节炎患者的疼痛评分并减轻体重。",
+      "SURMOUNT-OSA试验显示，替西帕肽显著降低中重度阻塞性睡眠呼吸暂停合并肥胖患者的呼吸暂停低通气指数（AHI）。",
+      "STRIDE试验显示，司美格鲁肽显著增加症状性外周动脉疾病（PAD）合并T2D患者的最大步行距离。",
+      "GLP-1药物的获益机制涉及抗炎、代谢改善、大脑介导的器官间通讯以及直接激活组织GLP-1R，部分效应独立于体重减轻，但具体分子通路尚待阐明。"
+    ]
+  },
+  "html": "C:\\Users\\29346\\Desktop\\figexplain-tool\\validation\\YDS4VMSL.html",
+  "elapsed_s": 57
+}
